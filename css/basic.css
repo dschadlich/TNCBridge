@@ -1,0 +1,95 @@
+body{
+	background-color:grey;
+
+}
+
+.meter {
+	float: left;
+    width: 400px;
+    height: 200px;
+	background-color:#eeeeee;
+ 	border-radius: 30px;
+	margin: 50px;
+	cursor: pointer;
+	text-align:center;
+
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.meter .meter_label{
+	font-size:2em;
+	position: relative;
+	top: 10px;
+}
+.meter .meter_data {
+	font-size:5em;
+	position: relative;
+	top: 10%;
+  
+}
+
+.meter:hover {
+
+	background-color:#dddddd;
+}
+
+
+.log {
+	float: left;
+    width: 1000px;
+    height: 200px;
+	background-color:#eeeeee;
+ 	border-radius: 30px;
+	margin: 50px;
+	cursor: pointer;
+	text-align:center;
+
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+
+}
+
+
+#log_data {
+            height: 100%;
+            width: 100%;
+            overflow: auto;
+
+}
+
+.fullscreen_meter {
+
+position: absolute;
+top: 0;
+bottom: 0;
+left:0;
+right:0;
+	
+
+	background-color:#eeeeee;
+
+
+
+	text-align:center;
+
+}
+
+
+
+.fullscreen_meter .meter_label{
+	font-size:5em;
+	position: relative;
+	top: 110px;
+}
+.fullscreen_meter .meter_data {
+	font-size:10em;
+	position: relative;
+	top: 200px;
+  
+}
+.hidden{
+	display:none;
+}

@@ -1,0 +1,87 @@
+var net = require('net');
+
+var HOST = '127.0.0.1';
+var PORT = 8001;
+
+var client = new net.Socket();
+client.connect(PORT, HOST, function() {
+
+    console.log('CONNECTED TO: ' + HOST + ':' + PORT);
+    // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client 
+    //client.write('I am Chuck Norris!');
+
+});
+
+// Add a 'data' event handler for the client socket
+// data is what the server sent to this socket
+client.on('data', function(data) {
+    
+    //console.log('DATA: ' + data);
+    buff = new Buffer(data, 'hex');
+
+	console.log ("length" + buff.length);
+	var lastHeaderByte = 0;
+	for (i = 1; i < buff.length; i++) { 
+	   // console.log ("Last: "+ i + ": " + buff[i] + " Compared: " +  (buff[i] & 0x01));
+	  //  console.log ("Last2: "+ i + ": " + buff[i] + " Compared: " +  (buff[i] & 0x80));
+		if (buff[i] & 0x01){
+			lastHeaderBytes = i;
+			break;
+		}
+	}
+
+console.log ("last header: " + lastHeaderBytes);
+	for (i = 0; i <= lastHeaderBytes; i++) { 
+	    buff[i] = (buff[i]>>1);
+	}
+	var HeaderInfo = new Object;
+	data2 = String.fromCharCode.apply(null, new Uint8Array(buff, 1, lastHeaderByte));
+	HeaderInfo["Destination"] = data2.substring (1, 8).trim ();
+	HeaderInfo["Destination_SSID"] = data2.substring (8, 9);
+
+	HeaderInfo["Source"] = data2.substring (9, 14).trim ();
+	HeaderInfo["Source_SSID"] = data2.substring (14, 15);
+/*need some SSID tricks
+https://www.tapr.org/pdf/AX25.2.2.pdf page 21
+
+
+*/
+
+	for (i = 1; i <=((lastHeaderBytes - 15) / 7); i++) { 
+		var Digipeater = {
+			callsign: data2.substring (9+i*7, 14+i*7).trim (),
+			ssid:  data2.substring (14+i*7, 15+i*7)
+		};
+		HeaderInfo["Digipeater"+i] = Digipeater;
+
+	}
+
+	data = String (data);
+
+	//console.log ("Control: " + data.substring (lastHeaderBytes+ 1, lastHeaderBytes + 2) );
+	
+
+HeaderInfo["Control"] = data.substring (lastHeaderBytes+ 1, lastHeaderBytes + 2);
+HeaderInfo["PID"] = data.substring (lastHeaderBytes+ 2, lastHeaderBytes + 3);
+HeaderInfo["Info"];
+HeaderInfo["FCS"];
+HeaderInfo["FrameOK"];
+
+	//console.log ("DATA P" + data.substring (lastHeaderByte, data.length));
+
+	//console.log (data);
+console.log (HeaderInfo);
+	console.log (data.substring(lastHeaderBytes+3, data.length));
+
+    // Close the client socket completely
+    //client.destroy();
+
+
+
+
+});
+
+// Add a 'close' event handler for the client socket
+client.on('close', function() {
+    console.log('Connection closed');
+});
