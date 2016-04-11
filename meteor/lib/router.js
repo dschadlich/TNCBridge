@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
 Router.route( '/', function() {
   this.render ('main');
 });
 
->>>>>>> master
 Router.route( '/api/v1', function() {
   // This is where we handle the request.
   this.response.setHeader( 'Access-Control-Allow-Origin', '*' );
