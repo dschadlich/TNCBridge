@@ -1,3 +1,7 @@
+Router.route( '/', function() {
+  this.render ('main');
+});
+
 Router.route( '/api/v1', function() {
   // This is where we handle the request.
   this.response.setHeader( 'Access-Control-Allow-Origin', '*' );
