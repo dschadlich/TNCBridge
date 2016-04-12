@@ -1,10 +1,18 @@
+/*
+
+var names =
+
+_.each(names, function(doc) {
+  Markers.insert(doc);
+})
+*/
 if (Meteor.isClient) {
   Template.map.onCreated(function() {
     GoogleMaps.ready('map', function(map) {
       google.maps.event.addListener(map.instance, 'click', function(event) {
         console.log ("need to insert a point");
         console.log (event.latLng.lat() +","+ event.latLng.lng());
-        Markers.insert({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+        Markers.insert({ latitude: event.latLng.lat(), longitude: event.latLng.lng() });
       });
 
       var markers = {};
@@ -13,20 +21,20 @@ if (Meteor.isClient) {
         added: function (document) {
           var marker = new google.maps.Marker({
             draggable: true,
-            animation: google.maps.Animation.DROP,
-            position: new google.maps.LatLng(document.lat, document.lng),
+            position: new google.maps.LatLng(document.latitude, document.longitude),
             map: map.instance,
             id: document._id
           });
 
           google.maps.event.addListener(marker, 'dragend', function(event) {
-            Markers.update(marker.id, { $set: { lat: event.latLng.lat(), lng: event.latLng.lng() }});
+            Markers.update(marker.id, { $set: { latitude: event.latLng.lat(), longitude: event.latLng.lng() }});
           });
 
           markers[document._id] = marker;
         },
         changed: function (newDocument, oldDocument) {
-          markers[newDocument._id].setPosition({ lat: newDocument.lat, lng: newDocument.lng });
+          console.log ("changed");
+          markers[newDocument._id].setPosition({ lat: newDocument.latitude, lng: newDocument.longitude });
         },
         removed: function (oldDocument) {
           markers[oldDocument._id].setMap(null);
