@@ -311,10 +311,43 @@ client.on('data', function(data) {
       feet: data.toString('utf8', datastart+NextStart+29, datastart+NextStart+35),
       meters: "todo"
     }
-//     resources for calculating datum;
-// http://www.aprs.org/datum.txt
-// http://base91.sourceforge.net/
-// https://en.wikipedia.org/wiki/World_Geodetic_System
+
+    if (data.toString('utf8', datastart+NextStart+36, datastart+NextStart+37) === "w"){
+    //  console.log (HeaderInfo["Longitude"]["DDM"]);
+      HeaderInfo["Latitude"]["DDM"] = HeaderInfo["Latitude"]["DDM"].concat ((data.toString('utf8', datastart+NextStart+37, datastart+NextStart+38).charCodeAt(0) - 33)*11);
+      HeaderInfo["Longitude"]["DDM"] = HeaderInfo["Longitude"]["DDM"].concat ((data.toString('utf8', datastart+NextStart+38, datastart+NextStart+39).charCodeAt(0) - 33)*11);
+
+    //  console.log (HeaderInfo["Longitude"]["DDM"]);
+    }
+
+
+    /*
+    resources for calculating datum;
+http://www.aprs.org/datum.txt
+http://www.asciitable.com/
+https://en.wikipedia.org/wiki/World_Geodetic_System
+
+basically they are using a modified version of base91 see example, or better yet me trying to explain it to rainer on slack:
+
+but reading how it works, it is foobar
+so i have a location, 41 12.86N, 073 13.96W
+but to get more precision, i am given this string
+!wcX!
+the !'s are just encapulating
+w indicates it is base 91 encoded
+if it was W it would only be 0-9
+now, to get the value, you look up the ascii value of the charactor
+c =99 X =88
+now you subtract 33
+so c =66, X = 55
+because we are base 91 we can go from 0 to 90
+but we want to scale this value
+sooo
+multiply by 1.1
+c=72.6 X=60.5
+now my location is ....
+N 41 12.86726, W 073 13.96605
+*/
 
 
     break; //end of position w/ time w/o messaging
