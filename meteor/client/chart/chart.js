@@ -7,15 +7,14 @@ Template.chart.helpers ({
 Template.formatd = function (){
    console.log ("formatd");
   let d =  Markers.find ({});
+  //need to make a subscription and then use the on ready
 
   let count = 1;
   let results = [];
-  d.forEach(function (marker) {
-    console.log ("foreach run");
-  console.log(count + ":" + marker.altitude);
-  results.push ([count, marker.altitude]);
-//need to make a subscription and then use the on ready
-  count += 1;
+  Markers.find ({}).forEach(function (marker) {
+    console.log(count + ":" + marker.altitude);
+    results.push ([count, marker.altitude]);
+    count += 1;
   });
 
   //console.log (d);
