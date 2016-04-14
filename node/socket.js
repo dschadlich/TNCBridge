@@ -34,7 +34,6 @@ client.on ('error', function (err){
 // data is what the server sent to this socket
 client.on('data', function(data) {
 
-
   //console.log('DATA: ' + data);
   buff = new Buffer(data, 'hex');
   buff2 = new Buffer(data, 'hex');
@@ -402,9 +401,27 @@ N 41 12.86726, W 073 13.96605
     break;
 
     case "S":
-      console.log ("sys Stat");
-      console.log( data.toString('utf8', datastart, datastart+18)) ;
+      if (data.toString('utf8', datastart, datastart+8) == "SYS_STAT"){
+        console.log ("Got SYS_STAT");
+      //  console.log( data.toString('utf8', datastart+9, datastart+10)) ;
+        for (var i = 0; i < 8; i++) { // i have 8 digital pins
+          HeaderInfo["DP3" + i.toString()] = (data.toString('utf8', datastart+9+i, datastart+10+i) === '1') ? true : false;
+        }
 
+        for (var i = 0; i < 3; i++) { // i have 3 temp sensors in a row
+
+          console.log( data.toString('utf8', datastart+18 + (5*i), datastart+22+ (5*i))) ;
+          HeaderInfo["Temperature" + i.toString()] = {
+            value: parseInt( data.toString('utf8', datastart+18+(5*i), datastart+22+(5*i)))/10,
+            unit: 'C'
+          }
+        //  console.log( data.toString('utf8', datastart+23, datastart+27)) ;
+
+        }
+
+
+
+      }
     break;
 
 
