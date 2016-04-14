@@ -516,7 +516,7 @@ N 41 12.86726, W 073 13.96605
   console.log (HeaderInfo);
 
 
-  io.emit ('packet', HeaderInfo);
+  //io.emit ('packet', HeaderInfo);
   //console.log (data.substring(datastart, data.length));
 
   // Close the client socket completely
