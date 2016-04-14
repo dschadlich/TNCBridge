@@ -166,7 +166,7 @@ client.on('data', function(data) {
   */
   console.log ("Datatype: " + data.toString('utf8', datastart, datastart+1));
 
-  HeaderInfo["SystemTimeStamp"] = "Not yet";
+  HeaderInfo["SystemTimeStamp"] = new Date ();
 
   switch(data.toString('utf8', datastart, datastart+1)) {
     case "!":
@@ -401,6 +401,8 @@ N 41 12.86726, W 073 13.96605
     break;
 
     case "S":
+
+    //  SYS_STAT:01111011,0238,0228,0228,0799,0109,0133,0095,0109,22.89,1011.09<0x0d>
       if (data.toString('utf8', datastart, datastart+8) == "SYS_STAT"){
         console.log ("Got SYS_STAT");
       //  console.log( data.toString('utf8', datastart+9, datastart+10)) ;
@@ -410,18 +412,25 @@ N 41 12.86726, W 073 13.96605
 
         for (var i = 0; i < 3; i++) { // i have 3 temp sensors in a row
 
-          console.log( data.toString('utf8', datastart+18 + (5*i), datastart+22+ (5*i))) ;
+        //  console.log( data.toString('utf8', datastart+18 + (5*i), datastart+22+ (5*i))) ;
           HeaderInfo["Temperature" + i.toString()] = {
             value: parseInt( data.toString('utf8', datastart+18+(5*i), datastart+22+(5*i)))/10,
             unit: 'C'
           }
         //  console.log( data.toString('utf8', datastart+23, datastart+27)) ;
+        }
+        for (var i = 0; i < 5; i++) { // i have 5 voltage sensors
 
+        //console.log (data.toString('utf8', datastart+33+(5*i), datastart+37+(5*i)));
+          HeaderInfo["Voltage" + i.toString()] =  parseInt( data.toString('utf8', datastart+33+(5*i), datastart+37+(5*i)))/100;
         }
 
+        HeaderInfo["PressureTemp"] = parseFloat(data.toString('utf8', datastart+58, datastart+63));
+        HeaderInfo["Barometric"] = parseFloat(data.toString('utf8', datastart+64, datastart+71));
 
 
-      }
+
+      }//end of if SYS_STAT
     break;
 
 
