@@ -24,6 +24,12 @@ client.connect(PORT, HOST, function() {
 
 });
 
+client.on ('error', function (err){
+  //handle some errors and let me know whats going on
+  console.log ("Error Connecting Direwolf: " + err.toString ());
+//  console.dir (err);
+});
+
 // Add a 'data' event handler for the client socket
 // data is what the server sent to this socket
 client.on('data', function(data) {
