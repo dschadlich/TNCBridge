@@ -1,9 +1,10 @@
 var net = require('net');
+/*
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-
+*/
 
 var HOST = '127.0.0.1'; // for TNC
 var PORT = 8001; //For TNC
@@ -531,7 +532,7 @@ client.on('close', function() {
 
 
 //http and websocket
-
+/*
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
@@ -549,7 +550,7 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
 });
-
+*/
 
 
 //general functions
