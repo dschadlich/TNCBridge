@@ -34,10 +34,10 @@ client.on('data', function(data) {
   //console.log ("length" + buff.length);
   var lastHeaderByte = 0;
   for (i = 1; i < buff.length; i++) {
-     console.log ("Last: "+ i + ": " + buff[i] + " Compared: " +  (buff[i] & 0x01));
-    console.log ("Last2: "+ i + ": " + buff[i] + " Compared: " +  (buff[i] & 0x80));
+    //  console.log ("Last: "+ i + ": " + buff[i] + " Compared: " +  (buff[i] & 0x01));
+    // console.log ("Last2: "+ i + ": " + buff[i] + " Compared: " +  (buff[i] & 0x80));
     if (buff[i] & 0x01){
-      console.log ("lastHeaderByte: " + i);
+    //  console.log ("lastHeaderByte: " + i);
       lastHeaderBytes = i;
       break;
     }
@@ -46,7 +46,7 @@ client.on('data', function(data) {
 
   //console.log (buff);
 
-  console.dir (buff);
+  // console.dir (buff);
 
   for (i = 0; i <= lastHeaderBytes; i++) {
     //console.log (i + " : " + buff[i] + "  " + buff[i]>>1);
@@ -54,7 +54,7 @@ client.on('data', function(data) {
 
   }
 
-  console.dir (buff);
+  // console.dir (buff);
   var HeaderInfo = new Object;
   data2 = String.fromCharCode.apply(null, new Uint8Array(buff, 1, lastHeaderByte));
   HeaderInfo["Destination"] = data2.substring (1, 8).trim ();
@@ -394,6 +394,13 @@ N 41 12.86726, W 073 13.96605
 
     break;
 
+    case "S":
+      console.log ("sys Stat");
+      console.log( data.toString('utf8', datastart, datastart+18)) ;
+
+    break;
+
+
     case "@":
     //position w/ time and messaging
     HeaderInfo["MessageCapable"] = "True";
@@ -436,10 +443,7 @@ N 41 12.86726, W 073 13.96605
       };
       NextStart = 8;
       break;
-      case "S":
-      console.log ("sys Stat");
 
-      break;
 
       default:
 

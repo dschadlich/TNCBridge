@@ -6,7 +6,8 @@ Template.chart.helpers ({
 });
 Template.formatd = function (){
    console.log ("formatd");
-  let d =  Markers.find ({});
+  let d =  Markers.find ({}).fetch ();
+  console.log (d);
   //need to make a subscription and then use the on ready
 
   let count = 1;
@@ -22,14 +23,30 @@ Template.formatd = function (){
   //console.log (results);
   //return results;
 };
+Template.chart.onRendered(function() {
+    console.log ("chart rendered");
+    Meteor.setTimeout(findMarkers, 10);
+  Template.chart.onCreated (function(){
+    this.subscribe('markers');
+  });
 
-Template.chart.rendered = function () {
-  console.log ("chart rendered");
-Template.formatd ();
-
-//  $.plot("#graph", [ Template.formatd () ]);
 
 
-  //.setData(d2).setupGrid().draw ();
+
+});
+function findMarkers (){
+  // console.log ("findMarkers run");
+  // let d =  Markers.find ({}).fetch ();
+  // console.log (d);
+
+
+
+  let count = 1;
+  let results = [];
+  Markers.find ({}).forEach(function (marker) {
+    console.log(count + ":" + marker.altitude);
+    results.push ([count, marker.altitude]);
+    count += 1;
+  });
 
 }
