@@ -162,9 +162,9 @@ client.on('data', function(data) {
 
 
 
+  console.log ("Datatype: " + data.toString('utf8', datastart, datastart+1));
 
   */
-  console.log ("Datatype: " + data.toString('utf8', datastart, datastart+1));
 
   HeaderInfo["SystemTimeStamp"] = new Date ();
 
@@ -235,7 +235,7 @@ client.on('data', function(data) {
 
     //data.toString('utf8', datastart+1, datastart+7)
 
-
+    HeaderInfo['Type'] = "Location";
     var NextStart = 0;
     switch (data.toString('utf8', datastart+7, datastart+8)){
       case "z":
@@ -401,10 +401,11 @@ N 41 12.86726, W 073 13.96605
     break;
 
     case "S":
+    HeaderInfo['Type'] = "SYS_STAT";
 
     //  SYS_STAT:01111011,0238,0228,0228,0799,0109,0133,0095,0109,22.89,1011.09<0x0d>
       if (data.toString('utf8', datastart, datastart+8) == "SYS_STAT"){
-        console.log ("Got SYS_STAT");
+        //console.log ("Got SYS_STAT");
       //  console.log( data.toString('utf8', datastart+9, datastart+10)) ;
         for (var i = 0; i < 8; i++) { // i have 8 digital pins
           HeaderInfo["DP3" + i.toString()] = (data.toString('utf8', datastart+9+i, datastart+10+i) === '1') ? true : false;
@@ -539,8 +540,13 @@ N 41 12.86726, W 073 13.96605
   //console.log ("DATA P" + data.substring (lastHeaderByte, data.length));
 
   //console.log (data);
-  console.log (HeaderInfo);
 
+  //console.log (HeaderInfo[]);
+  if (HeaderInfo['Source'] == "AB1JC" &&   HeaderInfo['Type'] == "Location"){
+    console.log ("Heard Balloon");
+    console.dir ("Latitude  :   " + HeaderInfo["Latitude"]["DDM"]);
+    console.dir ("Longitude : " + HeaderInfo["Longitude"]["DDM"]);
+  }
 
   //io.emit ('packet', HeaderInfo);
   //console.log (data.substring(datastart, data.length));
