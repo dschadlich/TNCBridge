@@ -3,16 +3,17 @@ API = {
   connection: function( request ) {},
   handleRequest: function( context, resource, method ) {
     console.log ("handle request");
+    console.log (resource);
   },
   methods: {
     pizza: {
       GET: function( context, connection ) {},
       POST: function( context, connection ) {},
-      PUT: function( context, connection ) {},
+      PUT: function( context, connection ) {console.log ("put pizza");},
       DELETE: function( context, connection ) {}
     }
   },
-  resources: {},
+  resources: {}f,
   utility: {
     getRequestContents: function( request ) {},
     hasData: function( data ) {},

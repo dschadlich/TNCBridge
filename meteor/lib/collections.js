@@ -5,9 +5,9 @@ if (Meteor.isServer) {
     return Markers.find({});
   });
 
-  Meteor.publish('markers', function mapData() {
-    return Markers.find({});
-  });
+  // Meteor.publish('markers', function mapData() {
+  //   return Markers.find({});
+  // });
 
 
 }
