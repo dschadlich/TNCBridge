@@ -1,4 +1,19 @@
 Markers = new Mongo.Collection('markers');
+
+
+Packets = new Mongo.Collection( 'packets' );
+
+
+
+
+
+
+
+
+
+
+
+
 if (Meteor.isServer) {
   // This code only runs on the server
   Meteor.publish('markers', function chartData() {

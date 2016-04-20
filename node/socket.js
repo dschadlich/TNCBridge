@@ -1,4 +1,10 @@
 var net = require('net');
+var client = new net.Socket();
+
+
+var Client = require('node-rest-client').Client;
+var HTTPclient = new Client();
+
 /*
 var app = require('express')();
 var http = require('http').Server(app);
@@ -8,9 +14,7 @@ var io = require('socket.io')(http);
 
 var HOST = '127.0.0.1'; // for TNC
 var PORT = 8001; //For TNC
-
-var client = new net.Socket();
-
+var RESTAPI_ENDPOINT = "http://localhost:3000/api/v1/balloon"
 
 
 
@@ -544,9 +548,32 @@ N 41 12.86726, W 073 13.96605
   //console.log (HeaderInfo[]);
   if (HeaderInfo['Source'] == "AB1JC" &&   HeaderInfo['Type'] == "Location"){
     console.log ("Heard Balloon");
-    console.dir ("Latitude  :   " + HeaderInfo["Latitude"]["DDM"]);
-    console.dir ("Longitude : " + HeaderInfo["Longitude"]["DDM"]);
+  //  console.dir ("Latitude  :   " + HeaderInfo["Latitude"]["DDM"]);
+  //  console.dir ("Longitude : " + HeaderInfo["Longitude"]["DDM"]);
+
+
+
+    var args = {
+    	data: { payload: HeaderInfo},
+    	headers: { "Content-Type": "application/json" }
+    };
+
+    HTTPclient.registerMethod("postBalloonLocation", RESTAPI_ENDPOINT, "POST");
+
+    HTTPclient.methods.postBalloonLocation(args, function (data, response) {
+      //for now I am shooting blind, no error checking
+
+    	// parsed response body as js object
+    	//console.log(data);
+    	// raw response
+    	//console.log(response);
+    });
+
+
   }
+
+
+
 
   //io.emit ('packet', HeaderInfo);
   //console.log (data.substring(datastart, data.length));

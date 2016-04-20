@@ -12,7 +12,7 @@ Router.route( '/api/v1/balloon', function() {
     this.response.setHeader( 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept' );
     this.response.setHeader( 'Access-Control-Allow-Methods', 'PUT' );
     this.response.end( 'Set OPTIONS.' );
-  } else if ( this.request.method === "PUT" ) { 
+  } else { 
     API.handleRequest( this, 'balloon', this.request.method );
   }
 }, { where: 'server' } );
