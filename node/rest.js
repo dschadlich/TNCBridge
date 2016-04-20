@@ -7,9 +7,9 @@ var client = new Client();
 var args = {
 	data: { test: "hello" },
 	headers: { "Content-Type": "application/json" }
-}; 
+};
 
-client.registerMethod("postMethod", "http://localhost:3000/api/v1", "PUT");
+client.registerMethod("postMethod", "http://localhost:3000/api/v1/balloon", "PUT");
 
 client.methods.postMethod(args, function (data, response) {
 	// parsed response body as js object

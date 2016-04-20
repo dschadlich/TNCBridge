@@ -4,7 +4,7 @@ Router.route( '/', function() {
 Router.route( '/map', function() {
   this.render ('map');
 });
-Router.route( '/api/v1', function() {
+Router.route( '/api/v1/balloon', function() {
   // This is where we handle the request.
   this.response.setHeader( 'Access-Control-Allow-Origin', '*' );
 
@@ -12,7 +12,7 @@ Router.route( '/api/v1', function() {
     this.response.setHeader( 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept' );
     this.response.setHeader( 'Access-Control-Allow-Methods', 'PUT' );
     this.response.end( 'Set OPTIONS.' );
-  } else {
-    API.handleRequest( this, 'pizza', this.request.method );
+  } else if ( this.request.method === "PUT" ) { 
+    API.handleRequest( this, 'balloon', this.request.method );
   }
 }, { where: 'server' } );
