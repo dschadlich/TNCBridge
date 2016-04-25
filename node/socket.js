@@ -405,6 +405,7 @@ N 41 12.86726, W 073 13.96605
     break;
 
     case "S":
+    //console.log ("I got a SYS_STAT");
     HeaderInfo['Type'] = "SYS_STAT";
 
     //  SYS_STAT:01111011,0238,0228,0228,0799,0109,0133,0095,0109,22.89,1011.09<0x0d>
@@ -533,7 +534,14 @@ N 41 12.86726, W 073 13.96605
 
   if (typeof HeaderInfo["Longitude"] != 'undefined') { //convert DDM to DD
 
-    HeaderInfo["Longitude"]["DD"] = (parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[0])+parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[1])/60).toFixed(6);
+
+if (parseFloat(HeaderInfo["Longitude"]["DDM"]) > 0 ){
+  HeaderInfo["Longitude"]["DD"] = (parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[0])+parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[1])/60).toFixed(6);
+}else{
+  HeaderInfo["Longitude"]["DD"] = (parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[0])-parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[1])/60).toFixed(6);  
+
+}
+
     HeaderInfo["Latitude"]["DD"] = (parseFloat(HeaderInfo["Latitude"]["DDM"].split(' ')[0])+parseFloat(HeaderInfo["Latitude"]["DDM"].split(' ')[1])/60).toFixed(6);
 
   }
@@ -545,8 +553,8 @@ N 41 12.86726, W 073 13.96605
 
   //console.log (data);
 
-  //console.log (HeaderInfo[]);
-  if (HeaderInfo['Source'] == "AB1JC" &&   HeaderInfo['Type'] == "Location"){
+  console.log (HeaderInfo);
+  if (HeaderInfo['Source'] == "AB1JC" &&  ( HeaderInfo['Type'] == "Location" || HeaderInfo['Type'] =='SYS_STAT') ){
     console.log ("Heard Balloon");
   //  console.dir ("Latitude  :   " + HeaderInfo["Latitude"]["DDM"]);
   //  console.dir ("Longitude : " + HeaderInfo["Longitude"]["DDM"]);
@@ -558,16 +566,47 @@ N 41 12.86726, W 073 13.96605
     	headers: { "Content-Type": "application/json" }
     };
 
-    HTTPclient.registerMethod("postBalloonLocation", RESTAPI_ENDPOINT, "POST");
 
-    HTTPclient.methods.postBalloonLocation(args, function (data, response) {
-      //for now I am shooting blind, no error checking
 
-    	// parsed response body as js object
-    	//console.log(data);
-    	// raw response
-    	//console.log(response);
+    var req = HTTPclient.post(RESTAPI_ENDPOINT, args, function (data, response) {
+        // parsed response body as js object
+        //console.log(data);
+        // raw response
+        console.log(response);
     });
+
+    req.on('requestTimeout', function (req) {
+        console.log('request has expired');
+        req.abort();
+    });
+
+    req.on('responseTimeout', function (res) {
+        console.log('response has expired');
+
+    });
+
+    //it's usefull to handle request errors to avoid, for example, socket hang up errors on request timeouts
+    req.on('error', function (err) {
+        console.log('request error', err);
+    });
+
+
+
+    // HTTPclient.registerMethod("postBalloonLocation", RESTAPI_ENDPOINT, "POST");
+    //
+    // HTTPclient.methods.postBalloonLocation(args, function (data, response) {
+    //   //for now I am shooting blind, no error checking
+    //
+    // 	// parsed response body as js object
+    // 	//console.log(data);
+    // 	// raw response
+    // 	//console.log(response);
+    // });
+    //
+
+
+
+
 
 
   }

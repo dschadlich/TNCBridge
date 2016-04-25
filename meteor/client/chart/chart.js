@@ -58,13 +58,22 @@
 
 Template.body.onRendered(function bodyOnCreated() {
   Meteor.subscribe('packets');
-  Packets.find ().observe ({
+  Packets.find ({Type: 'Location'}).observe ({
     added:function (NewDoc){
-      console.log ("new Data");
+      console.log ("new location");
       console.log (NewDoc);
       $("#packetLog").append (NewDoc.Latitude.DD + "  " + NewDoc.Longitude.DD + "<br />\n");
     }
   });
 
+  Packets.find ({Type: 'SYS_STAT'}).observe ({
+    added:function (NewDoc){
+      console.log ("new SYS_STAT");
+      console.log (NewDoc);
+      $("#packetLog").append (NewDoc.Temperature0.value + NewDoc.Temperature0.unit + " " + NewDoc.Temperature1.value + NewDoc.Temperature1.unit + " " + NewDoc.Temperature2.value + NewDoc.Temperature2.unit  +"<br />\n");
+    }
+  });
+
   //console.log (Meteor.packets;
 });
+Type: 'SYS_STAT'

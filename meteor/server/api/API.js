@@ -21,11 +21,7 @@ API = {
     balloon: {
       GET: function( context, connection ) {},
       POST: function( context, connection ) {
-        console.log ("POST BALLOON");
-        console.log (connection.data.payload);
         Packets.insert (connection.data.payload);
-      //  var pizza = Pizza.insert( connection.data );
-
       },
       PUT: function( context, connection ) {
         console.log ("put balloon");

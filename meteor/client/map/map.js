@@ -17,10 +17,36 @@ if (Meteor.isClient) {
 
       var markers = {};
 
+
+      Packets.find ({Type: 'Location'}).observe ({
+        added:function (NewDoc){
+          console.log ("new location22");
+          console.log (NewDoc);
+        //  $("#packetLog").append (NewDoc.Latitude.DD + "  " + NewDoc.Longitude.DD + "<br />\n");
+
+          var marker = new google.maps.Marker({
+            draggable: false,
+            position: new google.maps.LatLng(NewDoc.Latitude.DD, NewDoc.Longitude.DD),
+            map: map.instance,
+            id: NewDoc._id
+          });
+
+
+
+          markers[NewDoc._id] = marker;
+
+
+
+        }
+      });
+
+
+
       Markers.find().observe({
         added: function (document) {
+          console.log ("new marker");
           var marker = new google.maps.Marker({
-            draggable: true,
+            draggable: false,
             position: new google.maps.LatLng(document.latitude, document.longitude),
             map: map.instance,
             id: document._id
@@ -55,7 +81,7 @@ if (Meteor.isClient) {
         return {
           center: new google.maps.LatLng(41.1028, -73.4512),
 
-          zoom: 14
+          zoom: 10
         };
       }
     }
