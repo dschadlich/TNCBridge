@@ -6,22 +6,35 @@ _.each(names, function(doc) {
   Markers.insert(doc);
 })
 */
+let positionWatch;
+var markers = {};
+var googleMap;
+
+
 if (Meteor.isClient) {
   Template.map.onCreated(function() {
+
     GoogleMaps.ready('map', function(map) {
+      //Session.set ("googleMap", map);
+      googleMap = map;
       google.maps.event.addListener(map.instance, 'click', function(event) {
         console.log ("need to insert a point");
         console.log (event.latLng.lat() +","+ event.latLng.lng());
         Markers.insert({ latitude: event.latLng.lat(), longitude: event.latLng.lng() });
       });
 
-      var markers = {};
+
+      positionWatch = navigator.geolocation.watchPosition(updatePosition, handlePermissionError, {
+        enableHighAccuracy: true,
+        timeout: 60000, //it might take a minute for the 60 to start from a cold start
+        maximumAge: Infinity // I'll take any location data
+      });
 
 
       Packets.find ({Type: 'Location'}).observe ({
         added:function (NewDoc){
-          console.log ("new location22");
-          console.log (NewDoc);
+        //  console.log ("new location22");
+        //  console.log (NewDoc);
         //  $("#packetLog").append (NewDoc.Latitude.DD + "  " + NewDoc.Longitude.DD + "<br />\n");
 
           var marker = new google.maps.Marker({
@@ -37,14 +50,14 @@ if (Meteor.isClient) {
 
 
 
-        }
+        }//maps ready
       });
 
 
 
       Markers.find().observe({
         added: function (document) {
-          console.log ("new marker");
+          //console.log ("new marker");
           var marker = new google.maps.Marker({
             draggable: false,
             position: new google.maps.LatLng(document.latitude, document.longitude),
@@ -86,4 +99,21 @@ if (Meteor.isClient) {
       }
     }
   });
+}
+
+function updatePosition (pos){
+  console.log ("updatePosition");
+  console.log (pos);
+  console.log (googleMap);
+  markers["myLocation"] = new google.maps.Marker({
+    draggable: false,
+    position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+    map: googleMap.instance,
+    id: "myLocation"
+  });
+}
+function handlePermissionError(err) {
+    // console.warn('ERROR(' + err.code + '): ' + err.message);
+    alert('ERROR (' + err.code + '): ' + err.message + ' Location data is not avaliable.');
+
 }
