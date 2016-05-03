@@ -111,8 +111,8 @@ function updatePosition (pos){
   // }
 
   Session.set('location', pos);
-
-  console.log (pos);
+  console.log (Session.get('location'));
+  //console.log (pos);
   //console.log (googleMap);
   markers["myLocation"] = new google.maps.Marker({
     draggable: false,
