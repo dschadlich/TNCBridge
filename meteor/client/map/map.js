@@ -103,15 +103,27 @@ if (Meteor.isClient) {
 
 function updatePosition (pos){
   console.log ("updatePosition");
-  // const last = Session.get('lastLocation');
-  //
-  // if (last.cords !== undefined){
-  //   const distance = getDistance (pos.coords, last.coords);
-  //   console.log (distance);
-  // }
+   const last = Session.get('location');
+   console.log (last);
+   if (last !== undefined){
+     const distance = getDistance (pos.coords, last.coords);
+     console.log (distance);
+   }
+
+   let location = {};
+   location.timestamp = pos.timestamp;
+   location.coords = {};
+   location.coords.latitude = pos.coords.latitude;
+   location.coords.longitude = pos.coords.longitude;
+   location.coords.accuracy = pos.coords.accuracy;
+   //console.log (JSON.stringify(location));
+   Session.set('location', JSON.stringify(location));
 
 
-  //console.log (pos);
+
+
+
+  console.log (pos);
   //console.log (googleMap);
   markers["myLocation"] = new google.maps.Marker({
     draggable: false,
@@ -121,12 +133,8 @@ function updatePosition (pos){
   });
   console.log ("updatePosition2");
 
-  let location = {};
-  location.latitude = pos.coords.latitude;
-  location.longitude = pos.coords.longitude;
-  console.log (JSON.stringify(location));
-  Session.set('location', JSON.stringify(pos));
-  console.log (Session.get('location'));
+
+  console.log (JSON.parse(Session.get('location')));
 }
 function handlePermissionError(err) {
     // console.warn('ERROR(' + err.code + '): ' + err.message);
