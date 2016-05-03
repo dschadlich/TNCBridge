@@ -121,8 +121,8 @@ function updatePosition (pos){
   });
   console.log ("updatePosition2");
 
-  let location = pos.coords.latitude;
-  Session.set('location', location);
+  //let location = pos.coords.latitude;
+  Session.set('location', JSON.stringify(pos));
   console.log (Session.get('location'));
 }
 function handlePermissionError(err) {
