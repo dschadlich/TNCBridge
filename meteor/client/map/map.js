@@ -121,8 +121,8 @@ function updatePosition (pos){
   });
   console.log ("updatePosition2");
 
-
-  Session.set('location', pos);
+  let location = pos;
+  Session.set('location', location);
   console.log (Session.get('location'));
 }
 function handlePermissionError(err) {
