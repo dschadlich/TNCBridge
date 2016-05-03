@@ -122,6 +122,7 @@ function updatePosition (pos){
   console.log ("updatePosition2");
 
   //let location = pos.coords.latitude;
+  console.log (JSON.stringify(pos));
   Session.set('location', JSON.stringify(pos));
   console.log (Session.get('location'));
 }
