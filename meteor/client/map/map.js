@@ -110,8 +110,7 @@ function updatePosition (pos){
   //   console.log (distance);
   // }
 
-  Session.set('location', "somewhere over the rainbow");
-  console.log (Session.get('location'));
+
   //console.log (pos);
   //console.log (googleMap);
   markers["myLocation"] = new google.maps.Marker({
@@ -120,6 +119,11 @@ function updatePosition (pos){
     map: googleMap.instance,
     id: "myLocation"
   });
+  console.log ("updatePosition2");
+
+
+  Session.set('location', pos);
+  console.log (Session.get('location'));
 }
 function handlePermissionError(err) {
     // console.warn('ERROR(' + err.code + '): ' + err.message);
