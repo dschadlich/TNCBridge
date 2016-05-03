@@ -4,6 +4,10 @@ Router.route( '/', function() {
 Router.route( '/map', function() {
   this.render ('map');
 });
+
+Router.route( '/chart', function() {
+  this.render ('chart');
+});
 Router.route( '/api/v1/balloon', function() {
   // This is where we handle the request.
   this.response.setHeader( 'Access-Control-Allow-Origin', '*' );
