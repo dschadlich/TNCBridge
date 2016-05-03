@@ -56,33 +56,34 @@
 
 
 
-Template.body.onRendered(function () {
-  Meteor.subscribe('packets');
-  Packets.find ({Type: 'Location'}).observe ({
-    added:function (NewDoc){
-    //  console.log ("new location");
-    //  console.log (NewDoc);
-      $("#packetLog").append (NewDoc.Latitude.DD + "  " + NewDoc.Longitude.DD + "<br />\n");
-    }
-  });
+Template.chart.onRendered(function () {
+  // Meteor.subscribe('packets');
+  // Packets.find ({Type: 'Location'}).observe ({
+  //   added:function (NewDoc){
+  //   //  console.log ("new location");
+  //   //  console.log (NewDoc);
+  //     $("#packetLog").append (NewDoc.Latitude.DD + "  " + NewDoc.Longitude.DD + "<br />\n");
+  //   }
+  // });
+  //
+  // Packets.find ({Type: 'SYS_STAT'}).observe ({
+  //   added:function (NewDoc){
+  //     console.log ("new SYS_STAT");
+  //     console.log (NewDoc);
+  //     $("#packetLog").append (NewDoc.Temperature0.value + NewDoc.Temperature0.unit + " " + NewDoc.Temperature1.value + NewDoc.Temperature1.unit + " " + NewDoc.Temperature2.value + NewDoc.Temperature2.unit  +"<br />\n");
+  //   }
+  // });
 
-  Packets.find ({Type: 'SYS_STAT'}).observe ({
-    added:function (NewDoc){
-      console.log ("new SYS_STAT");
-      console.log (NewDoc);
-      $("#packetLog").append (NewDoc.Temperature0.value + NewDoc.Temperature0.unit + " " + NewDoc.Temperature1.value + NewDoc.Temperature1.unit + " " + NewDoc.Temperature2.value + NewDoc.Temperature2.unit  +"<br />\n");
-    }
-  });
+
+
+
 
 //d3 code
-
-
 
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var formatDate = d3.time.format("%d-%b-%y");
 
 var x = d3.time.scale()
     .range([0, width]);
@@ -107,10 +108,12 @@ var svg = d3.select("#barChart").append("svg")
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+console.log (svg);
 d3.tsv("data.tsv", type, function(error, data) {
+  console.log ("got tsv data");
+
   if (error) throw error;
-  console.log (data);
+  //console.log (data);
   x.domain(d3.extent(data, function(d) { return d.date; }));
   y.domain(d3.extent(data, function(d) { return d.close; }));
 
@@ -135,11 +138,7 @@ d3.tsv("data.tsv", type, function(error, data) {
       .attr("d", line);
 });
 
-function type(d) {
-  d.date = formatDate.parse(d.date);
-  d.close = +d.close;
-  return d;
-}
+
 
 
 
@@ -165,3 +164,9 @@ function type(d) {
   //console.log (Meteor.packets;
 });
 //Type: 'SYS_STAT'
+function type(d) {
+
+  d.date = d3.time.format("%d-%b-%y").parse(d.date);
+  d.close = +d.close;
+  return d;
+}
