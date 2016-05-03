@@ -110,8 +110,8 @@ function updatePosition (pos){
   //   console.log (distance);
   // }
 
-  Session.set('myLocation', pos);
-  console.log (Session.get('myLocation'));
+  Session.set('location', "somewhere over the rainbow");
+  console.log (Session.get('location'));
   //console.log (pos);
   //console.log (googleMap);
   markers["myLocation"] = new google.maps.Marker({
