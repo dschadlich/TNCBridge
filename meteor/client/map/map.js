@@ -102,20 +102,13 @@ if (Meteor.isClient) {
 }
 
 function updatePosition (pos){
-
-
-
-
-
-
   console.log ("updatePosition");
-  const last = Session.get('lastLocation');
-
-  console.log (last);
-  if (last.cords !== undefined){
-    const distance = getDistance (pos.coords, last.coords);
-    console.log (distance);
-  }
+  // const last = Session.get('lastLocation');
+  //
+  // if (last.cords !== undefined){
+  //   const distance = getDistance (pos.coords, last.coords);
+  //   console.log (distance);
+  // }
 
   Session.set('lastLocation', pos);
 
