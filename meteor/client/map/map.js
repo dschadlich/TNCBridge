@@ -110,7 +110,7 @@ function updatePosition (pos){
   //   console.log (distance);
   // }
 
-  Session.set('lastLocation', pos);
+  Session.set('location', pos);
 
   console.log (pos);
   //console.log (googleMap);
