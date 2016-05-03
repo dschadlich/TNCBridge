@@ -14,7 +14,7 @@ var io = require('socket.io')(http);
 
 var HOST = '127.0.0.1'; // for TNC
 var PORT = 8001; //For TNC
-var RESTAPI_ENDPOINT = "http://localhost:3000/api/v1/balloon"
+var RESTAPI_ENDPOINT = "http://discoveryballoon.org/api/v1/balloon"
 
 
 
@@ -538,7 +538,7 @@ N 41 12.86726, W 073 13.96605
 if (parseFloat(HeaderInfo["Longitude"]["DDM"]) > 0 ){
   HeaderInfo["Longitude"]["DD"] = (parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[0])+parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[1])/60).toFixed(6);
 }else{
-  HeaderInfo["Longitude"]["DD"] = (parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[0])-parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[1])/60).toFixed(6);  
+  HeaderInfo["Longitude"]["DD"] = (parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[0])-parseFloat(HeaderInfo["Longitude"]["DDM"].split(' ')[1])/60).toFixed(6);
 
 }
 

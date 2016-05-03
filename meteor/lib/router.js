@@ -10,9 +10,9 @@ Router.route( '/api/v1/balloon', function() {
 
   if ( this.request.method === "OPTIONS" ) {
     this.response.setHeader( 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept' );
-    this.response.setHeader( 'Access-Control-Allow-Methods', 'PUT' );
+    this.response.setHeader( 'Access-Control-Allow-Methods', 'POST' );
     this.response.end( 'Set OPTIONS.' );
-  } else { 
+  } else {
     API.handleRequest( this, 'balloon', this.request.method );
   }
 }, { where: 'server' } );

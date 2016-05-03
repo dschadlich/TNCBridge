@@ -102,9 +102,25 @@ if (Meteor.isClient) {
 }
 
 function updatePosition (pos){
+
+
+
+
+
+
   console.log ("updatePosition");
+  const last = Session.get('lastLocation');
+
+  console.log (last);
+  if (last.cords !== undefined){
+    const distance = getDistance (pos.coords, last.coords);
+    console.log (distance);
+  }
+
+  Session.set('lastLocation', pos);
+
   console.log (pos);
-  console.log (googleMap);
+  //console.log (googleMap);
   markers["myLocation"] = new google.maps.Marker({
     draggable: false,
     position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
@@ -117,3 +133,32 @@ function handlePermissionError(err) {
     alert('ERROR (' + err.code + '): ' + err.message + ' Location data is not avaliable.');
 
 }
+// function calcDistance (point1, point2){
+//   const R = 6378137; //radius of earth in meters
+//
+//   dlon = abs(point1.longitude - point2.longitude);
+//   dlat = abs(point1.latitude - point2.latitude);
+//   a = (Math.sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2;
+//   c = 2 * atan2( sqrt(a), sqrt(1-a) );
+//   d = R * c;
+// }
+
+//http://stackoverflow.com/questions/1502590/calculate-distance-between-two-points-in-google-maps-v3
+var rad = function(x) {
+  return x * Math.PI / 180;
+};
+
+var getDistance = function(p1, p2) {
+  console.log ("getDistance");
+  console.log (p1);
+  console.log (p2);
+  var R = 6378137; // Earth’s mean radius in meter
+  var dLat = rad(p2.latitude - p1.latitude);
+  var dLong = rad(p2.longitude - p1.longitude);
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(rad(p1.latitude)) * Math.cos(rad(p2.latitude)) *
+    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d; // returns the distance in meter
+};
