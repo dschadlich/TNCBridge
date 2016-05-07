@@ -1,5 +1,6 @@
 var SerialPort = require("serialport").SerialPort
-
+var FS = require('fs');
+var FileData;
 
 
 
@@ -11,13 +12,26 @@ port.open(function (err) {
   if (err) {
     return console.log('Error opening port: ', err.message);
   }
+  console.log ("port opened");
+  FS.readFile('data.txt', 'utf8', function(err, data) {
+      if (err) throw err;
+    //  console.log('File has been read:', data);
+      FileData = data.split ("\n");
+      writeData (0);
 
-  // errors will be emitted on the port since there is no callback to write
-  writeData();
+  });
 });
 
 
 
-function writeData(){
-  port.write('/161727h4056.32N/07225.61WO212/012/A=011977!w4N!\n');
+function writeData(lineNumber){
+
+    console.log ("write data: ", lineNumber, FileData[lineNumber]);
+  if (lineNumber>=FileData.length){
+    return; //done
+  }
+  port.write(FileData[lineNumber] + "\n");
+  setTimeout (writeData, 1500, (lineNumber+1));
+
+
 }
