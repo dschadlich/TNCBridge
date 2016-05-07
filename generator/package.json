@@ -1,0 +1,15 @@
+{
+  "name": "generator",
+  "version": "1.0.0",
+  "description": "Generate data for HAB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "serial",
+    "balloon"
+  ],
+  "author": "David Schadlich",
+  "license": "GPL-3.0"
+}
