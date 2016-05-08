@@ -36,7 +36,7 @@ if (Meteor.isClient) {
         //  console.log ("new location22");
         //  console.log (NewDoc);
         //  $("#packetLog").append (NewDoc.Latitude.DD + "  " + NewDoc.Longitude.DD + "<br />\n");
-        var icon = new google.maps.MarkerImage("http://mapt-static1.he.fi:8053/s0/aprs-symbols-24-0.png", new google.maps.Size(48, 48), new google.maps.Point(336, 48));
+        var icon = new google.maps.MarkerImage("http://mapt-static1.he.fi:8053/s0/aprs-symbols-24-0.png", new google.maps.Size(24, 24), new google.maps.Point(336, 48));
 
           var marker = new google.maps.Marker({
             draggable: false,
