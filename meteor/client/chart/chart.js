@@ -70,7 +70,7 @@ Template.chart.onRendered(function () {
     added:function (NewDoc){
       console.log ("new SYS_STAT");
       console.log (NewDoc);
-      $("#packetLog").append (NewDoc.Temperature0.value + NewDoc.Temperature0.unit + " " + NewDoc.Temperature1.value + NewDoc.Temperature1.unit + " " + NewDoc.Temperature2.value + NewDoc.Temperature2.unit  +"<br />\n");
+      // $("#packetLog").append (NewDoc.Temperature0.value + NewDoc.Temperature0.unit + " " + NewDoc.Temperature1.value + NewDoc.Temperature1.unit + " " + NewDoc.Temperature2.value + NewDoc.Temperature2.unit  +"<br />\n");
     }
   });
 

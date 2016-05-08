@@ -46,13 +46,7 @@ if (Meteor.isClient) {
             icon: icon,
             id: NewDoc._id
           });
-
-
-
           markers[NewDoc._id] = marker;
-
-
-
         }//maps ready
       });
 
