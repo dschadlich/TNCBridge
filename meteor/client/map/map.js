@@ -39,6 +39,7 @@ if (Meteor.isClient) {
 
           var marker = new google.maps.Marker({
             draggable: false,
+            animation: google.maps.Animation.DROP,
             position: new google.maps.LatLng(NewDoc.Latitude.DD, NewDoc.Longitude.DD),
             map: map.instance,
             id: NewDoc._id
