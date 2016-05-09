@@ -62,7 +62,7 @@ Template.chart.onRendered(function () {
     added:function (NewDoc){
     //  console.log ("new location");
     //  console.log (NewDoc);
-      $("#packetLog").append (NewDoc.Latitude.DD + "  " + NewDoc.Longitude.DD + "<br />\n");
+      $("#altitudeLog").html ("<h2> Current Altitude" + NewDoc.Latitude.altitude + "</h2>\n");
     }
   });
 
