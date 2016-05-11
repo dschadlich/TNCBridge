@@ -21,6 +21,9 @@ API = {
     balloon: {
       GET: function( context, connection ) {},
       POST: function( context, connection ) {
+        console.log (connection.data.payload.SystemTimeStamp);
+        console.log (new Date);
+
         Packets.insert (connection.data.payload);
       },
       PUT: function( context, connection ) {

@@ -15,6 +15,7 @@ var io = require('socket.io')(http);
 var HOST = '127.0.0.1'; // for TNC
 var PORT = 8001; //For TNC
 var RESTAPI_ENDPOINT = "https://discoveryballoon.org/api/v1/balloon"
+// var RESTAPI_ENDPOINT = "http://localhost:3000/api/v1/balloon"
 
 
 
