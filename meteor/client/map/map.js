@@ -52,32 +52,7 @@ if (Meteor.isClient) {
 
 
 
-      Markers.find().observe({
-        added: function (document) {
-          //console.log ("new marker");
-          var marker = new google.maps.Marker({
-            draggable: false,
-            position: new google.maps.LatLng(document.latitude, document.longitude),
-            map: map.instance,
-            id: document._id
-          });
-
-          google.maps.event.addListener(marker, 'dragend', function(event) {
-            Markers.update(marker.id, { $set: { latitude: event.latLng.lat(), longitude: event.latLng.lng() }});
-          });
-
-          markers[document._id] = marker;
-        },
-        changed: function (newDocument, oldDocument) {
-          console.log ("changed");
-          markers[newDocument._id].setPosition({ lat: newDocument.latitude, lng: newDocument.longitude });
-        },
-        removed: function (oldDocument) {
-          markers[oldDocument._id].setMap(null);
-          google.maps.event.clearInstanceListeners(markers[oldDocument._id]);
-          delete markers[oldDocument._id];
-        }
-      });
+      
     });
   });
 

@@ -1,5 +1,18 @@
 .map-container {
-  width: 100%;
-  max-width: 100%;
-  height: 500px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.hud {
+  width: 35vw;
+  height: 35vh;
+  min-height: 250px;
+  min-height: 250px;
+  position: absolute;
+  display:inline-block;
+  z-index: 10;
+  bottom: 5vh;
+  right: 5vw;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 15px;
 }
