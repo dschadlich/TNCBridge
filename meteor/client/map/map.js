@@ -30,7 +30,7 @@ if (Meteor.isClient) {
       Packets.find ({Type: 'Location'}).observe ({
         added:function (NewDoc){
         //  console.log ("new location22");
-          console.log (NewDoc);
+        //  console.log (NewDoc);
         //  $("#packetLog").append (NewDoc.Latitude.DD + "  " + NewDoc.Longitude.DD + "<br />\n");
           let point = new google.maps.MarkerImage("/aprs-symbols.png", new google.maps.Size(24, 24), new google.maps.Point(336, 0));
           let balloon = new google.maps.MarkerImage("/aprs-symbols.png", new google.maps.Size(24, 24), new google.maps.Point(336, 48));
@@ -43,14 +43,15 @@ if (Meteor.isClient) {
             id: NewDoc._id
           });
           map.instance.panTo(position);
-          for( i = 0; i < markers.length; i++ ) {
-            //markers[i].icon = point;
-            //markers[i].setVisible(false);
-            console.log (i);
+          for (let i in markers) {
+            if (markers.hasOwnProperty(i)) {
+            //  console.log ( i);
+              //markers[i].setIcon(position);
+            }
           }
 
           markers[NewDoc._id] = (marker);
-
+          $( ".hud" ).html (generateHud(NewDoc) );
 
 
 
@@ -107,7 +108,7 @@ function updatePosition (pos){
   markers["myLocation"] = new google.maps.Marker({
     draggable: false,
     position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-    map: map.instance,
+    map: googleMap.instance,
     id: "myLocation"
   });
   console.log ("updatePosition2");
@@ -120,6 +121,18 @@ function handlePermissionError(err) {
     alert('ERROR (' + err.code + '): ' + err.message + ' Location data is not avaliable.');
 
 }
+function generateHud (packet){
+  console.log (packet);
+  let returnVal = "<h1>";
+
+  returnVal += "Altitude: " + packet.Altitude.feet + " feet<br />";
+  returnVal += "Speed: " + packet.Speed + " knots<br />";
+  returnVal += "Heading: " + packet.Course + " degrees<br />";
+
+  returnVal += "</h2>";
+  return returnVal;
+}
+
 // function calcDistance (point1, point2){
 //   const R = 6378137; //radius of earth in meters
 //
