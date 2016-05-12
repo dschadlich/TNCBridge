@@ -1,5 +1,5 @@
 Router.route( '/', function() {
-  this.render ('main');
+  // this.render ('main');
 });
 Router.route( '/map', function() {
   this.render ('map');
