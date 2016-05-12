@@ -51,8 +51,9 @@ if (Meteor.isClient) {
           }
 
           markers[NewDoc._id] = (marker);
-          $( ".hud" ).html (generateHud(NewDoc) );
 
+          $( ".hud" ).html (generateHud(NewDoc) );
+          Session.set ('lastHeard', NewDoc)
 
 
         }//maps ready
@@ -73,7 +74,6 @@ if (Meteor.isClient) {
       if (GoogleMaps.loaded()) {
         return {
           center: new google.maps.LatLng(41.1028, -73.4512),
-
           zoom: 13
         };
       }
@@ -122,7 +122,9 @@ function handlePermissionError(err) {
 
 }
 function generateHud (packet){
+  console.log ("generate HUD");
   console.log (packet);
+  console.log (Session.get('lastHeard'));
   let returnVal = "<h1>";
 
   returnVal += "Altitude: " + parseInt(packet.Altitude.feet) + " feet<br />";
