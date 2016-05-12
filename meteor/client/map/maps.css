@@ -4,8 +4,8 @@
 }
 
 .hud {
-  width: 35vw;
-  height: 35vh;
+  width: 50rem;
+  height: 35rem;
   min-height: 250px;
   min-height: 250px;
   position: absolute;
@@ -15,4 +15,8 @@
   right: 5vw;
   background-color: rgba(255, 255, 255, 0.75);
   border-radius: 15px;
+}
+
+h1 {
+  font-size: 2em;
 }
