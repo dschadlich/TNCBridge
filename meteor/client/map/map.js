@@ -12,16 +12,12 @@ var googleMap;
 
 
 if (Meteor.isClient) {
-  Template.map.onCreated(function() {
+  Template.map.onRendered(function() {
+    Meteor.subscribe('packets');
 
     GoogleMaps.ready('map', function(map) {
       //Session.set ("googleMap", map);
       googleMap = map;
-      google.maps.event.addListener(map.instance, 'click', function(event) {
-        console.log ("need to insert a point");
-        console.log (event.latLng.lat() +","+ event.latLng.lng());
-        Markers.insert({ latitude: event.latLng.lat(), longitude: event.latLng.lng() });
-      });
 
 
       positionWatch = navigator.geolocation.watchPosition(updatePosition, handlePermissionError, {
@@ -34,25 +30,36 @@ if (Meteor.isClient) {
       Packets.find ({Type: 'Location'}).observe ({
         added:function (NewDoc){
         //  console.log ("new location22");
-        //  console.log (NewDoc);
+          console.log (NewDoc);
         //  $("#packetLog").append (NewDoc.Latitude.DD + "  " + NewDoc.Longitude.DD + "<br />\n");
-        var icon = new google.maps.MarkerImage("http://mapt-static1.he.fi:8053/s0/aprs-symbols-24-0.png", new google.maps.Size(24, 24), new google.maps.Point(336, 0));
-
-          var marker = new google.maps.Marker({
+          let point = new google.maps.MarkerImage("http://mapt-static1.he.fi:8053/s0/aprs-symbols-24-0.png", new google.maps.Size(24, 24), new google.maps.Point(336, 0));
+          let balloon = new google.maps.MarkerImage("http://mapt-static1.he.fi:8053/s0/aprs-symbols-24-0.png", new google.maps.Size(24, 24), new google.maps.Point(336, 48));
+          let position =  new google.maps.LatLng(NewDoc.Latitude.DD, NewDoc.Longitude.DD);
+          let marker = new google.maps.Marker({
             draggable: false,
-            animation: google.maps.Animation.DROP,
-            position: new google.maps.LatLng(NewDoc.Latitude.DD, NewDoc.Longitude.DD),
+            position:position,
             map: map.instance,
-            icon: icon,
+            icon: balloon,
             id: NewDoc._id
           });
-          markers[NewDoc._id] = marker;
+          map.instance.panTo(position);
+          for( i = 0; i < markers.length; i++ ) {
+            //markers[i].icon = point;
+            //markers[i].setVisible(false);
+            console.log (i);
+          }
+
+          markers[NewDoc._id] = (marker);
+
+
+
+
         }//maps ready
       });
 
 
 
-      
+
     });
   });
 
@@ -66,7 +73,7 @@ if (Meteor.isClient) {
         return {
           center: new google.maps.LatLng(41.1028, -73.4512),
 
-          zoom: 10
+          zoom: 13
         };
       }
     }
@@ -100,7 +107,7 @@ function updatePosition (pos){
   markers["myLocation"] = new google.maps.Marker({
     draggable: false,
     position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-    map: googleMap.instance,
+    map: map.instance,
     id: "myLocation"
   });
   console.log ("updatePosition2");
