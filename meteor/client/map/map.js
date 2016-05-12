@@ -128,6 +128,7 @@ function generateHud (packet){
   let returnVal = "<h1>";
 
   returnVal += "Altitude: " + parseInt(packet.Altitude.feet) + " feet<br />";
+  returnVal += "Altitude Change: " + (parseInt(packet.Altitude.feet) - parseInt(Session.get('lastHeard').Altitude.feet)) + " feet/min<br />";
   returnVal += "Speed: " + parseInt(packet.Speed) + " knots<br />";
   returnVal += "Heading: " + parseInt(packet.Course) + " degrees<br />";
   let heardLocation = {
