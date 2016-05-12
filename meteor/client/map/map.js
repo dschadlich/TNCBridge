@@ -125,9 +125,23 @@ function generateHud (packet){
   console.log (packet);
   let returnVal = "<h1>";
 
-  returnVal += "Altitude: " + packet.Altitude.feet + " feet<br />";
-  returnVal += "Speed: " + packet.Speed + " knots<br />";
-  returnVal += "Heading: " + packet.Course + " degrees<br />";
+  returnVal += "Altitude: " + parseInt(packet.Altitude.feet) + " feet<br />";
+  returnVal += "Speed: " + parseInt(packet.Speed) + " knots<br />";
+  returnVal += "Heading: " + parseInt(packet.Course) + " degrees<br />";
+  let heardLocation = {
+    latitude: packet.Latitude.DD,
+    longitude: packet.Longitude.DD
+  }
+  let distanceToBalloon = getDistance(JSON.parse(Session.get ('location')).coords, heardLocation);
+  if (distanceToBalloon > 1000){
+    distanceToBalloon = ((distanceToBalloon/1000).toFixed(1)) + " km";
+  }else if (distanceToBalloon < 1000 && distanceToBalloon >100) {
+    distanceToBalloon = ((distanceToBalloon/1000).toFixed(3)) + " km";
+  }else {
+    distanceToBalloon = (distanceToBalloon.toFixed(2)) + " m";
+
+  }
+  returnVal += "Distance: " + distanceToBalloon + " <br />";
 
   returnVal += "</h2>";
   return returnVal;
