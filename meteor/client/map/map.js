@@ -119,8 +119,8 @@ function updatePosition (pos){
 }
 function handlePermissionError(err) {
     // console.warn('ERROR(' + err.code + '): ' + err.message);
-    alert('ERROR (' + err.code + '): ' + err.message + ' Location data is not avaliable.');
-
+    //alert('ERROR (' + err.code + '): ' + err.message + ' Location data is not avaliable.');
+    alert ("Location data will not be avaliable.");
 }
 function generateHud (packet){
   console.log ("generate HUD");
@@ -147,7 +147,7 @@ function generateHud (packet){
     }
     returnVal += "Distance: " + distanceToBalloon + " <br />";
   } catch (err){
-    
+
   }
 
 
