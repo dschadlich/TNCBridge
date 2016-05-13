@@ -41,6 +41,8 @@ h1 {
     width: 20rem;
     height: 15rem;
     right: 9vw;
+    background-color: blue;
+
   }
   h1 {
     font-size: 1em;
