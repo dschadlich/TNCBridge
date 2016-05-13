@@ -21,8 +21,21 @@ h1 {
   font-size: 2em;
 }
 
+/*phones*/
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape){
+/* Styles */
+  .hud{
+    width: 20rem;
+    height: 15rem;
+    right: 9vw;
+  }
+  h1 {
+    font-size: 1em;
+  }
+}
 
-@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait){
 /* Styles */
   .hud{
     width: 20rem;
@@ -34,11 +47,23 @@ h1 {
 }
 
 
-@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+/*tablets*/
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape){
 /* Styles */
   .hud{
-    width: 20rem;
-    height: 15rem;
+    width: 40rem;
+    height: 25rem;
+  }
+  h1 {
+    font-size: 1em;
+  }
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait){
+/* Styles */
+  .hud{
+    width: 40rem;
+    height: 25rem;
   }
   h1 {
     font-size: 1em;
