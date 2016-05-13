@@ -51,8 +51,9 @@ if (Meteor.isClient) {
           }
 
           markers[NewDoc._id] = (marker);
+          const generateContent = generateHud(NewDoc);
+          $( ".hud" ).html ( generateContent );
 
-          $( ".hud" ).html (generateHud(NewDoc) );
           //Session.set ('lastHeard', NewDoc)
           lastHeard = NewDoc;
 
@@ -123,29 +124,32 @@ function handlePermissionError(err) {
 }
 function generateHud (packet){
   console.log ("generate HUD");
-  console.log (packet);
-  console.log (lastHeard);
 
   let returnVal = "<h1>";
 
   returnVal += "Altitude: " + parseInt(packet.Altitude.feet) + " feet<br />";
-  // returnVal += "Altitude Change: " + (parseInt(packet.Altitude.feet) - parseInt(lastHeard.Altitude.feet)) + " feet/min<br />";
+  // // returnVal += "Altitude Change: " + (parseInt(packet.Altitude.feet) - parseInt(lastHeard.Altitude.feet)) + " feet/min<br />";
   returnVal += "Speed: " + parseInt(packet.Speed) + " knots<br />";
   returnVal += "Heading: " + parseInt(packet.Course) + " degrees<br />";
   let heardLocation = {
     latitude: packet.Latitude.DD,
     longitude: packet.Longitude.DD
   }
-  let distanceToBalloon = getDistance(JSON.parse(Session.get ('location')).coords, heardLocation);
-  if (distanceToBalloon > 1000){
-    distanceToBalloon = ((distanceToBalloon/1000).toFixed(1)) + " km";
-  }else if (distanceToBalloon < 1000 && distanceToBalloon >100) {
-    distanceToBalloon = ((distanceToBalloon/1000).toFixed(3)) + " km";
-  }else {
-    distanceToBalloon = (distanceToBalloon.toFixed(2)) + " m";
 
+  try {
+    let distanceToBalloon = getDistance(JSON.parse(Session.get ('location')).coords, heardLocation);
+    if (distanceToBalloon > 1000){
+      distanceToBalloon = ((distanceToBalloon/1000).toFixed(1)) + " km";
+    }else if (distanceToBalloon < 1000 && distanceToBalloon >100) {
+      distanceToBalloon = ((distanceToBalloon/1000).toFixed(3)) + " km";
+    }else {
+      distanceToBalloon = (distanceToBalloon.toFixed(2)) + " m";
+    }
+    returnVal += "Distance: " + distanceToBalloon + " <br />";
+  } catch (err){
+    
   }
-  returnVal += "Distance: " + distanceToBalloon + " <br />";
+
 
   returnVal += "</h2>";
   return returnVal;
