@@ -6,7 +6,8 @@
 .hud {
   width: 50rem;
   height: 35rem;
-
+  min-height: 250px;
+  min-height: 250px;
   position: absolute;
   display:inline-block;
   z-index: 10;
@@ -18,4 +19,22 @@
 
 h1 {
   font-size: 2em;
+}
+
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+/* Styles */
+  .hud{
+    width: 20rem;
+    height: 15rem;
+  }
+}
+
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+/* Styles */
+  .hud{
+    width: 20rem;
+    height: 15rem;
+  }
 }
