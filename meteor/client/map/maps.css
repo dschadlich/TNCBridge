@@ -28,6 +28,9 @@ h1 {
     width: 20rem;
     height: 15rem;
   }
+  h1 {
+    font-size: 1em;
+  }
 }
 
 
@@ -36,5 +39,8 @@ h1 {
   .hud{
     width: 20rem;
     height: 15rem;
+  }
+  h1 {
+    font-size: 1em;
   }
 }
