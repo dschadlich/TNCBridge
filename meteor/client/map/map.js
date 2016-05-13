@@ -9,7 +9,7 @@ _.each(names, function(doc) {
 let positionWatch;
 var markers = {};
 var googleMap;
-
+let lastHeard;
 
 if (Meteor.isClient) {
   Template.map.onRendered(function() {
@@ -53,8 +53,8 @@ if (Meteor.isClient) {
           markers[NewDoc._id] = (marker);
 
           $( ".hud" ).html (generateHud(NewDoc) );
-          Session.set ('lastHeard', NewDoc)
-
+          //Session.set ('lastHeard', NewDoc)
+          lastHeard = NewDoc;
 
         }//maps ready
       });
@@ -124,11 +124,12 @@ function handlePermissionError(err) {
 function generateHud (packet){
   console.log ("generate HUD");
   console.log (packet);
-  console.log (Session.get('lastHeard'));
+  console.log (lastHeard);
+
   let returnVal = "<h1>";
 
   returnVal += "Altitude: " + parseInt(packet.Altitude.feet) + " feet<br />";
-  returnVal += "Altitude Change: " + (parseInt(packet.Altitude.feet) - parseInt(Session.get('lastHeard').Altitude.feet)) + " feet/min<br />";
+  // returnVal += "Altitude Change: " + (parseInt(packet.Altitude.feet) - parseInt(lastHeard.Altitude.feet)) + " feet/min<br />";
   returnVal += "Speed: " + parseInt(packet.Speed) + " knots<br />";
   returnVal += "Heading: " + parseInt(packet.Course) + " degrees<br />";
   let heardLocation = {
