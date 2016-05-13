@@ -6,8 +6,8 @@
 .hud {
   width: 50rem;
   height: 35rem;
-  min-height: 250px;
-  min-height: 250px;
+  /*min-height: 250px;
+  min-height: 250px;*/
   position: absolute;
   display:inline-block;
   z-index: 10;
