@@ -40,6 +40,7 @@ h1 {
   .hud{
     width: 20rem;
     height: 15rem;
+    right: 9vw;
   }
   h1 {
     font-size: 1em;
@@ -53,6 +54,8 @@ h1 {
   .hud{
     width: 40rem;
     height: 25rem;
+    right: 9vw;
+
   }
   h1 {
     font-size: 1em;
@@ -64,6 +67,8 @@ h1 {
   .hud{
     width: 40rem;
     height: 25rem;
+    right: 9vw;
+    background-color: red;
   }
   h1 {
     font-size: 1em;
